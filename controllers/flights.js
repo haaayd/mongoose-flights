@@ -5,6 +5,20 @@ function newFlight (req, res){
     title: "Add Flight", 
   })
 }
+function index (req, res) {
+  Flight.find({})
+  .then(flights => {
+    res.render("flights/index", {
+      flights: flights,
+      title: "All Flights",
+    })
+    
+  })
+  .catch(error => {
+    console.log(error)
+    res.redirect('/')
+  })
+}
 
 function create (req, res){
   Flight.create(req.body)
@@ -15,15 +29,45 @@ function create (req, res){
   })
   .catch ( error => {
     console.log(error)
-    res.redirect("/flights/new") 
+    res.redirect("/flights") 
 
   })
 }
 
+function show (req,res){
+  Flight.findById(req.params.id)
+  .then(flight => {
+    res.render("flights/show", {
+      flight: flight,
+      title: "Flight Detail"
+    })
+  })
+  .catch ( error => {
+    console.log(error)
+    res.redirect("/flights") 
+
+  })
+}
+function deleteFlight (req, res) {
+  Flight.findByIdAndDelete(req.params.id)
+  .then(() => {
+    res.redirect("/flights")
+  })
+  .catch ( error => {
+    console.log(error)
+    res.redirect("/flights") 
+})
+
+}
 
 export 
 {
   newFlight as new,
   create,
+  index,
+  show, 
+  deleteFlight as delete,
+
+  
 
 }
