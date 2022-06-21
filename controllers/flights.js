@@ -7,7 +7,17 @@ function newFlight (req, res){
 }
 
 function create (req, res){
+  Flight.create(req.body)
+  .then(flight =>{
+    console.log(flight)
+    //send a GET request to this URL
+    res.redirect("/flights/new")
+  })
+  .catch ( error => {
+    console.log(error)
+    res.redirect("/flights/new") 
 
+  })
 }
 
 
@@ -15,5 +25,5 @@ export
 {
   newFlight as new,
   create,
-  
+
 }
