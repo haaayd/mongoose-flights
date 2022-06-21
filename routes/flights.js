@@ -4,8 +4,12 @@ const router = Router()
 import * as flightsCtrl from "../controllers/flights.js"
 
 /* GET users listing. */
-router.post("/", flightsCtrl.create)
+
 router.get('/new', flightsCtrl.new) 
+
+// POST request localhost:3000/movies
+
+router.post("/", flightsCtrl.create)
 
 
 
