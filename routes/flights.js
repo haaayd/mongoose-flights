@@ -16,12 +16,13 @@ router.get("/:id/edit", flightsCtrl.edit)
 
 router.post("/", flightsCtrl.create)
 router.post("/:id/tickets", flightsCtrl.createTicket)
+router.post("/:id/meals", flightsCtrl.addMeal)
 
 //DELETE localhost:3000/movies/:id
 router.delete("/:id", flightsCtrl.delete)
 
 //put localhost:3000/flights/:id
-router.put("/:d", flightsCtrl.update)
+router.put("/:id", flightsCtrl.update)
 
 
 

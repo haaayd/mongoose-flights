@@ -1,3 +1,4 @@
+import { Flight } from "../models/flight.js"
 import { Meal } from "../models/meal.js"
 
 function newMeal (req, res) {
@@ -12,8 +13,12 @@ function newMeal (req, res) {
 }
 
 function create (req, res) {
-
+  Meal.create(req.body)
+  .then(meal => {
+    res.redirect("/meals/new")
+  })
 }
+
 
 export {
   newMeal as new,

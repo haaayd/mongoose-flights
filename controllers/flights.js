@@ -1,4 +1,5 @@
 import { Flight } from "../models/flight.js"
+import { Meal } from "../models/meal.js"
 
 function newFlight (req, res){
   res.render("flights/new", {
@@ -22,10 +23,8 @@ function index (req, res) {
 
 function create (req, res){
   Flight.create(req.body)
-  .then(flight =>{
-    console.log(flight)
-    //send a GET request to this URL
-    res.redirect("/flights/new")
+  .then(flight => {
+    res.redirect(`/flights/${flight._id}`)
   })
   .catch ( error => {
     console.log(error)
@@ -36,12 +35,18 @@ function create (req, res){
 
 function show (req,res){
   Flight.findById(req.params.id)
+  .populate("meals")
   .then(flight => {
-    res.render("flights/show", {
-      flight: flight,
-      title: "Flight Detail"
+    Meal.find({_id:{$nin:flight.meal}})
+    .then(meals => {
+      res.render("flights/show", {
+        flight: flight,
+        title: "Flight Detail",
+        meals: meals,
+      }) 
     })
   })
+
   .catch ( error => {
     console.log(error)
     res.redirect("/flights") 
@@ -100,6 +105,16 @@ function createTicket(req, res) {
   })
 
 }
+function addMeal(req, res) {
+  Flight.findById(req.params.id)
+  .then(flight => {
+    flight.meals.push(req.body.mealId)
+    flight.save()
+    .then(() => {
+      res.redirect(`/flights/${flight._id}`)
+    })
+  })
+}
 
 export 
 {
@@ -110,6 +125,7 @@ export
   deleteFlight as delete,
   edit,
   update,
-  createTicket
+  createTicket,
+  addMeal
 
 }
