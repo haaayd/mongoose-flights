@@ -15,12 +15,14 @@ router.get("/:id/edit", flightsCtrl.edit)
 // POST request localhost:3000/movies
 
 router.post("/", flightsCtrl.create)
+router.post("/:id/tickets", flightsCtrl.createTicket)
 
 //DELETE localhost:3000/movies/:id
 router.delete("/:id", flightsCtrl.delete)
 
 //put localhost:3000/flights/:id
 router.put("/:d", flightsCtrl.update)
+
 
 
 export {
